@@ -3,6 +3,8 @@ package com.dev.gabriel.desafio_picpay_simplificado.domain.model;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {
@@ -26,16 +28,26 @@ public class Usuario {
   @Enumerated(EnumType.STRING)
   private TipoUsuario tipo;
 
+  @Column(nullable = false)
+  private BigDecimal saldo;
+
   public Usuario() {}
 
   public Usuario(
-      Long id, String nomeCompleto, String cpfCnpj, String email, String senha, TipoUsuario tipo) {
+      Long id,
+      String nomeCompleto,
+      String cpfCnpj,
+      String email,
+      String senha,
+      TipoUsuario tipo,
+      BigDecimal saldo) {
     this.id = id;
     this.nomeCompleto = nomeCompleto;
     this.cpfCnpj = cpfCnpj;
     this.email = email;
     this.senha = senha;
     this.tipo = tipo;
+    this.saldo = saldo;
   }
 
   public Long getId() {
@@ -84,5 +96,13 @@ public class Usuario {
 
   public void setTipo(TipoUsuario tipo) {
     this.tipo = tipo;
+  }
+
+  public BigDecimal getSaldo() {
+    return saldo;
+  }
+
+  public void setSaldo(BigDecimal saldo) {
+    this.saldo = saldo;
   }
 }
