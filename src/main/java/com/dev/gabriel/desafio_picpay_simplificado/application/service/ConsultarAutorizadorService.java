@@ -4,5 +4,5 @@ import com.dev.gabriel.desafio_picpay_simplificado.application.dto.RealizarTrans
 
 public interface ConsultarAutorizadorService {
 
-  boolean ConsultarServicoAutorizador(RealizarTransferenciaDTO dto);
+  Boolean ConsultarServicoAutorizador(RealizarTransferenciaDTO dto);
 }
