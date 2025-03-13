@@ -5,6 +5,7 @@ import com.dev.gabriel.desafio_picpay_simplificado.application.dto.CadastrarUsua
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Usuario;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -16,6 +17,7 @@ public class CadastrarUsuarioUseCase {
     this.usuarioRepository = usuarioRepository;
   }
 
+  @Transactional
   public void cadastrarUsuario(CadastrarUsuarioDTO dto) {
     if (this.usuarioRepository.existsByCpfCnpj(dto.cpfCnpj())) {
       throw new RuntimeException("CPF já cadastrado no sistema");
