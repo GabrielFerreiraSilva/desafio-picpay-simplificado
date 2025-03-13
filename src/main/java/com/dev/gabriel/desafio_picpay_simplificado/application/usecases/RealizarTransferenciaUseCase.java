@@ -11,6 +11,8 @@ import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Usuario;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class RealizarTransferenciaUseCase {
   private final TransferenciaRepository transferenciaRepository;
@@ -46,6 +48,13 @@ public class RealizarTransferenciaUseCase {
     Transferencia transferencia = new Transferencia(null, dto.valor(), payer, payee, null, status);
 
     this.transferenciaRepository.save(transferencia);
+
+    if (autorizado) {
+      payer.setSaldo(payer.getSaldo().subtract(dto.valor()));
+      payee.setSaldo(payee.getSaldo().add(dto.valor()));
+      this.usuarioRepository.saveAll(List.of(payer, payee));
+    }
+
     return autorizado;
   }
 
