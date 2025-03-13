@@ -1,6 +1,6 @@
 package com.dev.gabriel.desafio_picpay_simplificado.domain.model;
 
-import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.StatusTransacao;
+import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.StatusTransferencia;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "tb_transacao")
-public class Transacao {
+public class Transferencia {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -31,17 +31,17 @@ public class Transacao {
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
-  private StatusTransacao status;
+  private StatusTransferencia status;
 
-  public Transacao() {}
+  public Transferencia() {}
 
-  public Transacao(
+  public Transferencia(
       Long id,
       BigDecimal valor,
       Usuario payer,
       Usuario payee,
       Instant timestamp,
-      StatusTransacao status) {
+      StatusTransferencia status) {
     this.id = id;
     this.valor = valor;
     this.payer = payer;
@@ -90,11 +90,11 @@ public class Transacao {
     this.timestamp = timestamp;
   }
 
-  public StatusTransacao getStatus() {
+  public StatusTransferencia getStatus() {
     return status;
   }
 
-  public void setStatus(StatusTransacao status) {
+  public void setStatus(StatusTransferencia status) {
     this.status = status;
   }
 }
