@@ -6,6 +6,8 @@ import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Usuario;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class CadastrarUsuarioUseCase {
   private final UsuarioRepository usuarioRepository;
@@ -23,6 +25,10 @@ public class CadastrarUsuarioUseCase {
       throw new RuntimeException("Email já cadastrado no sistema");
     }
 
+    if (dto.saldoInicial().compareTo(BigDecimal.ZERO) < 0) {
+      throw new RuntimeException("O saldo inicial não pode ser negativo");
+    }
+
     TipoUsuario tipo;
     try {
       tipo = TipoUsuario.valueOf(dto.tipo());
@@ -31,7 +37,14 @@ public class CadastrarUsuarioUseCase {
     }
 
     Usuario novoUsuario =
-        new Usuario(null, dto.nomeCompleto(), dto.cpfCnpj(), dto.email(), dto.senha(), tipo);
+        new Usuario(
+            null,
+            dto.nomeCompleto(),
+            dto.cpfCnpj(),
+            dto.email(),
+            dto.senha(),
+            tipo,
+            dto.saldoInicial());
 
     this.usuarioRepository.save(novoUsuario);
   }
