@@ -4,6 +4,7 @@ import com.dev.gabriel.desafio_picpay_simplificado.adapters.repository.Transfere
 import com.dev.gabriel.desafio_picpay_simplificado.adapters.repository.UsuarioRepository;
 import com.dev.gabriel.desafio_picpay_simplificado.application.dto.RealizarTransferenciaDTO;
 import com.dev.gabriel.desafio_picpay_simplificado.application.service.ConsultarAutorizadorService;
+import com.dev.gabriel.desafio_picpay_simplificado.application.service.NotificarRecebimentoService;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.StatusTransferencia;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Transferencia;
@@ -18,14 +19,17 @@ public class RealizarTransferenciaUseCase {
   private final TransferenciaRepository transferenciaRepository;
   private final UsuarioRepository usuarioRepository;
   private final ConsultarAutorizadorService consultarAutorizadorService;
+  private final NotificarRecebimentoService notificarRecebimentoService;
 
   public RealizarTransferenciaUseCase(
       TransferenciaRepository transferenciaRepository,
       UsuarioRepository usuarioRepository,
-      ConsultarAutorizadorService consultarAutorizadorService) {
+      ConsultarAutorizadorService consultarAutorizadorService,
+      NotificarRecebimentoService notificarRecebimentoService) {
     this.transferenciaRepository = transferenciaRepository;
     this.usuarioRepository = usuarioRepository;
     this.consultarAutorizadorService = consultarAutorizadorService;
+    this.notificarRecebimentoService = notificarRecebimentoService;
   }
 
   @Transactional
@@ -53,6 +57,7 @@ public class RealizarTransferenciaUseCase {
       payer.setSaldo(payer.getSaldo().subtract(dto.valor()));
       payee.setSaldo(payee.getSaldo().add(dto.valor()));
       this.usuarioRepository.saveAll(List.of(payer, payee));
+      this.notificarRecebimentoService.notificarRecebimento(dto);
     }
 
     return autorizado;
