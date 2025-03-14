@@ -2,6 +2,10 @@ package com.dev.gabriel.desafio_picpay_simplificado.domain.model;
 
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.StatusTransferencia;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -9,6 +13,10 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "tb_transacao")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Transferencia {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,69 +40,4 @@ public class Transferencia {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private StatusTransferencia status;
-
-  public Transferencia() {}
-
-  public Transferencia(
-      Long id,
-      BigDecimal valor,
-      Usuario payer,
-      Usuario payee,
-      Instant timestamp,
-      StatusTransferencia status) {
-    this.id = id;
-    this.valor = valor;
-    this.payer = payer;
-    this.payee = payee;
-    this.timestamp = timestamp;
-    this.status = status;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public BigDecimal getValor() {
-    return valor;
-  }
-
-  public void setValor(BigDecimal valor) {
-    this.valor = valor;
-  }
-
-  public Usuario getPayer() {
-    return payer;
-  }
-
-  public void setPayer(Usuario payer) {
-    this.payer = payer;
-  }
-
-  public Usuario getPayee() {
-    return payee;
-  }
-
-  public void setPayee(Usuario payee) {
-    this.payee = payee;
-  }
-
-  public Instant getTimestamp() {
-    return timestamp;
-  }
-
-  public void setTimestamp(Instant timestamp) {
-    this.timestamp = timestamp;
-  }
-
-  public StatusTransferencia getStatus() {
-    return status;
-  }
-
-  public void setStatus(StatusTransferencia status) {
-    this.status = status;
-  }
 }

@@ -9,28 +9,19 @@ import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.StatusTransferen
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Transferencia;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Usuario;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RealizarTransferenciaUseCase {
   private final TransferenciaRepository transferenciaRepository;
   private final UsuarioRepository usuarioRepository;
   private final ConsultarAutorizadorService consultarAutorizadorService;
   private final NotificarRecebimentoService notificarRecebimentoService;
-
-  public RealizarTransferenciaUseCase(
-      TransferenciaRepository transferenciaRepository,
-      UsuarioRepository usuarioRepository,
-      ConsultarAutorizadorService consultarAutorizadorService,
-      NotificarRecebimentoService notificarRecebimentoService) {
-    this.transferenciaRepository = transferenciaRepository;
-    this.usuarioRepository = usuarioRepository;
-    this.consultarAutorizadorService = consultarAutorizadorService;
-    this.notificarRecebimentoService = notificarRecebimentoService;
-  }
 
   @Transactional
   public boolean realizarTransferencia(RealizarTransferenciaDTO dto) {

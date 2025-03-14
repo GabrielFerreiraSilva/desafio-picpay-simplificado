@@ -4,18 +4,16 @@ import com.dev.gabriel.desafio_picpay_simplificado.adapters.repository.UsuarioRe
 import com.dev.gabriel.desafio_picpay_simplificado.application.dto.CadastrarUsuarioDTO;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.enums.TipoUsuario;
 import com.dev.gabriel.desafio_picpay_simplificado.domain.model.Usuario;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Service
+@RequiredArgsConstructor
 public class CadastrarUsuarioUseCase {
   private final UsuarioRepository usuarioRepository;
-
-  public CadastrarUsuarioUseCase(UsuarioRepository usuarioRepository) {
-    this.usuarioRepository = usuarioRepository;
-  }
 
   @Transactional
   public void cadastrarUsuario(CadastrarUsuarioDTO dto) {
